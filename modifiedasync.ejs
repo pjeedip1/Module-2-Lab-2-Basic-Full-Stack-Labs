@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Async Example with Enhancement</title>
+</head>
+<body>
+    <button id="asyncButton">Simulate Asynchronous Operation</button>
+    <p id="result"></p>
+
+    <button id="toggleItems">Toggle Items</button>
+    <ul id="itemList" style="display: none;">
+        <% const items=["Item 1", "Item 2" , "Item 3" ]; %>
+            <% items.forEach((item)=> { %>
+                <li>
+                    <%= item %>
+                </li>
+                <% }); %>
+    </ul>
+    <script>
+        const asyncButton = document.getElementById("asyncButton");
+        const result = document.getElementById("result");
+        const toggleButton = document.getElementById("toggleItems");
+        const itemList = document.getElementById("itemList");
+        asyncButton.addEventListener("click", async () => {
+            result.textContent = "Loading...";
+            const response = await fetch("/simulateAsync");
+            const data = await response.json();
+            result.textContent = data.message;
+        });
+        toggleButton.addEventListener("click", () => {
+            if (itemList.style.display === "none") {
+                itemList.style.display = "block";
+            } else {
+                itemList.style.display = "none";
+            }
+        });
+    </script>
+</body>
+</html>
